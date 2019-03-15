@@ -1,0 +1,28 @@
+language: go
+go:
+- '1.12'
+- '1.11'
+- tip
+script:
+- make ci
+- make test-compression
+- make artifacts/build/release/linux/amd64/traefik-acme
+before_deploy:
+- make archives
+matrix:
+  fast_finish: true
+  allow_failures:
+  - go: tip
+  - go: '1.11'
+deploy:
+  provider: releases
+  api_key:
+    secure: vHpS+UfUYPleTHig3baeh9zkmJ7ASYJUNXFZ8p5ddv6VHBHSPfJ3kaUxzYopl8q3289gY6HIRQ1WPLuxc/JilUH2Htw1f9+AlcH3p8zgnKT+6mR/fs2I6moSdaWIS6JHN2vfjlAPqv4CLl0VauJBoc+cisvdI1JPzYcYU7owCCCZ/VcxGtjf3eCQY/EaiEN3+/vjf2Gq41zj5b8W9N89zzUwCnjOPJOLjJraNJyPqx88L/5yMDFI+YcvPSdS1URbRtE8Sa32cPn8GOJb2Ec490sxDFsA3iKlnETixBPnb2LHU5GOdmc7D4C9uLMItw3xsDzpjfQ867wkKGbudYHK9y3BPgqrurzKnqOgjELKCxmVuwnAlXLnGGbMyCjUC4uZxFqf1AoelWeRjs1OoZaIrU6K6neVSmU2AIRJ6QH2m6tdZAXxLL/dCja91EXrtvUkuHWg2V9k8vxGHuYGbbJriE8CZVrGFQOzxgTSX4xYkGvqlzjK/OY5Izc0N0QpNFpIgQ88f7cM48lWaIIWnZBtMXRQC/fYFOaE4n+tsrguGe5NzJ2L+f67a0oIcS+mf3YYT3uR1/SWnnat2E0EKpMdNn6DpY5WgPpJsDL9nN4taHtt+aHhAIF3Q1LhtktpSRHOvogMZyJugEbB2CU2OzuWuGerLWgc7Cu5f8s3e9KP+0s=
+  skip_cleanup: true
+  file:
+  - artifacts/archives/traefik-acme-darwin-amd64.tar.gz
+  - artifacts/archives/traefik-acme-linux-amd64.tar.gz
+  - artifacts/archives/traefik-acme-windows-amd64.zip
+  go: '1.12'
+  on:
+    tags: true
