@@ -1,0 +1,9 @@
+package: github.com/koshatul/traefik-acme
+import:
+- package: github.com/go-acme/lego
+  subpackages:
+  - certcrypto
+  - registration
+- package: github.com/spf13/cobra
+- package: github.com/spf13/viper
+- package: go.uber.org/zap

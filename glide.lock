@@ -1,0 +1,88 @@
+hash: 75c6eb83ed0654c8efe0e54b15a58cfb8a55d8829fd1c65c03790f43fe782d14
+updated: 2019-03-15T15:35:39.274445+10:00
+imports:
+- name: github.com/cenkalti/backoff
+  version: 1e4cf3da559842a91afcb6ea6141451e6c30c618
+- name: github.com/fsnotify/fsnotify
+  version: 1485a34d5d5723fea214f5710708e19a831720e4
+- name: github.com/go-acme/lego
+  version: 0c87df143e630a1c50b4c36c8fbdda6cd993ebba
+  subpackages:
+  - acme
+  - acme/api
+  - acme/api/internal/nonces
+  - acme/api/internal/secure
+  - acme/api/internal/sender
+  - certcrypto
+  - log
+  - registration
+- name: github.com/hashicorp/hcl
+  version: 65a6292f0157eff210d03ed1bf6c59b190b8b906
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/printer
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/magiconair/properties
+  version: 7757cc9fdb852f7579b24170bcacda2c7471bb6a
+- name: github.com/mitchellh/mapstructure
+  version: 3536a929edddb9a5b34bd6861dc4a9647cb459fe
+- name: github.com/pelletier/go-toml
+  version: 690ec00a4b7e125266cf1c4725ae24af22564f8f
+- name: github.com/spf13/afero
+  version: f4711e4db9e9a1d3887343acb72b2bbfc2f686f5
+  subpackages:
+  - mem
+- name: github.com/spf13/cast
+  version: 8c9545af88b134710ab1cd196795e7f2388358d7
+- name: github.com/spf13/cobra
+  version: ba1052d4cbce7aac421a96de820558f75199ccbc
+- name: github.com/spf13/jwalterweatherman
+  version: 94f6ae3ed3bceceafa716478c5fbf8d29ca601a1
+- name: github.com/spf13/pflag
+  version: 24fa6976df40757dce6aea913e7b81ade90530e1
+- name: github.com/spf13/viper
+  version: 9e56dacc08fbbf8c9ee2dbc717553c758ce42bc9
+- name: go.uber.org/atomic
+  version: 1ea20fb1cbb1cc08cbd0d913a96dead89aa18289
+- name: go.uber.org/multierr
+  version: 3c4937480c32f4c13a875a1829af76c98ca3d40a
+- name: go.uber.org/zap
+  version: d2a364dac1d9b70c651d9f47381c5912361e5596
+  subpackages:
+  - buffer
+  - internal/bufferpool
+  - internal/color
+  - internal/exit
+  - zapcore
+- name: golang.org/x/crypto
+  version: a1f597ede03a7bef967a422b5b3a5bd08805a01e
+  subpackages:
+  - ed25519
+  - ed25519/internal/edwards25519
+  - ocsp
+  - pbkdf2
+- name: golang.org/x/sys
+  version: fead79001313d15903fb4605b4a1b781532cd93e
+  subpackages:
+  - unix
+- name: golang.org/x/text
+  version: 5d731a35f4867878fc89f7744f7b6debb3beded6
+  subpackages:
+  - transform
+  - unicode/norm
+- name: gopkg.in/square/go-jose.v2
+  version: 628223f44a71f715d2881ea69afc795a1e9c01be
+  subpackages:
+  - cipher
+  - json
+- name: gopkg.in/yaml.v2
+  version: 51d6538a90f86fe93ac480b35f37b2be17fef232
+testImports: []
