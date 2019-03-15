@@ -1,5 +1,5 @@
-hash: 75c6eb83ed0654c8efe0e54b15a58cfb8a55d8829fd1c65c03790f43fe782d14
-updated: 2019-03-15T15:35:39.274445+10:00
+hash: 0bf73060c9d4639f1e9db01ebc0bb94340913c02cb97c7bc4516de174a6e8b38
+updated: 2019-03-15T17:19:20.183421+10:00
 imports:
 - name: github.com/cenkalti/backoff
   version: 1e4cf3da559842a91afcb6ea6141451e6c30c618
@@ -30,12 +30,16 @@ imports:
   - json/token
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/konsorten/go-windows-terminal-sequences
+  version: f55edac94c9bbba5d6182a4be46d86a2c9b5b50e
 - name: github.com/magiconair/properties
   version: 7757cc9fdb852f7579b24170bcacda2c7471bb6a
 - name: github.com/mitchellh/mapstructure
   version: 3536a929edddb9a5b34bd6861dc4a9647cb459fe
 - name: github.com/pelletier/go-toml
   version: 690ec00a4b7e125266cf1c4725ae24af22564f8f
+- name: github.com/sirupsen/logrus
+  version: dae0fa8d5b0c810a8ab733fbd5510c7cae84eca4
 - name: github.com/spf13/afero
   version: f4711e4db9e9a1d3887343acb72b2bbfc2f686f5
   subpackages:
@@ -50,18 +54,8 @@ imports:
   version: 24fa6976df40757dce6aea913e7b81ade90530e1
 - name: github.com/spf13/viper
   version: 9e56dacc08fbbf8c9ee2dbc717553c758ce42bc9
-- name: go.uber.org/atomic
-  version: 1ea20fb1cbb1cc08cbd0d913a96dead89aa18289
-- name: go.uber.org/multierr
-  version: 3c4937480c32f4c13a875a1829af76c98ca3d40a
 - name: go.uber.org/zap
   version: d2a364dac1d9b70c651d9f47381c5912361e5596
-  subpackages:
-  - buffer
-  - internal/bufferpool
-  - internal/color
-  - internal/exit
-  - zapcore
 - name: golang.org/x/crypto
   version: a1f597ede03a7bef967a422b5b3a5bd08805a01e
   subpackages:
@@ -69,13 +63,31 @@ imports:
   - ed25519/internal/edwards25519
   - ocsp
   - pbkdf2
+  - ssh/terminal
 - name: golang.org/x/sys
   version: fead79001313d15903fb4605b4a1b781532cd93e
   subpackages:
   - unix
+  - windows
 - name: golang.org/x/text
   version: 5d731a35f4867878fc89f7744f7b6debb3beded6
   subpackages:
+  - encoding
+  - encoding/charmap
+  - encoding/htmlindex
+  - encoding/internal
+  - encoding/internal/identifier
+  - encoding/japanese
+  - encoding/korean
+  - encoding/simplifiedchinese
+  - encoding/traditionalchinese
+  - encoding/unicode
+  - internal/language
+  - internal/language/compact
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - runes
   - transform
   - unicode/norm
 - name: gopkg.in/square/go-jose.v2
@@ -85,4 +97,55 @@ imports:
   - json
 - name: gopkg.in/yaml.v2
   version: 51d6538a90f86fe93ac480b35f37b2be17fef232
-testImports: []
+testImports:
+- name: github.com/hpcloud/tail
+  version: a1dbeea552b7c8df4b542c66073e393de198a800
+  subpackages:
+  - ratelimiter
+  - util
+  - watch
+  - winfile
+- name: github.com/onsi/ginkgo
+  version: eea6ad008b96acdaa524f5b409513bf062b500ad
+  subpackages:
+  - config
+  - internal/codelocation
+  - internal/containernode
+  - internal/failer
+  - internal/leafnodes
+  - internal/remote
+  - internal/spec
+  - internal/spec_iterator
+  - internal/specrunner
+  - internal/suite
+  - internal/testingtproxy
+  - internal/writer
+  - reporters
+  - reporters/stenographer
+  - reporters/stenographer/support/go-colorable
+  - reporters/stenographer/support/go-isatty
+  - types
+- name: github.com/onsi/gomega
+  version: 90e289841c1ed79b7a598a7cd9959750cb5e89e2
+  subpackages:
+  - format
+  - internal/assertion
+  - internal/asyncassertion
+  - internal/oraclematcher
+  - internal/testingtsupport
+  - matchers
+  - matchers/support/goraph/bipartitegraph
+  - matchers/support/goraph/edge
+  - matchers/support/goraph/node
+  - matchers/support/goraph/util
+  - types
+- name: golang.org/x/net
+  version: 9f648a60d9775ef5c977e7669d1673a7a67bef33
+  subpackages:
+  - html
+  - html/atom
+  - html/charset
+- name: gopkg.in/fsnotify/fsnotify.v1
+  version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
+- name: gopkg.in/tomb.v1
+  version: c131134a1947e9afd9cecfe11f4c6dff0732ae58
