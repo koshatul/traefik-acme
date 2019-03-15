@@ -5,7 +5,6 @@ go:
 - tip
 script:
 - make ci
-- make test-compression
 - make artifacts/build/release/linux/amd64/traefik-acme
 before_deploy:
 - make archives
