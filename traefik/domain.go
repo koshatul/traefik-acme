@@ -7,11 +7,11 @@ type Domain struct {
 }
 
 // ToStrArray convert a domain into an array of strings.
-func (d *Domain) ToStrArray() []string {
-	var domains []string
+func (d *Domain) ToStrArray() (domains []string) {
 	if len(d.Main) > 0 {
 		domains = []string{d.Main}
 	}
+
 	return append(domains, d.SANs...)
 }
 

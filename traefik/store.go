@@ -61,11 +61,13 @@ func (s *LocalStore) GetCertificateByName(name string) *Certificate {
 	for _, cert := range s.GetCertificates() {
 		certDomains := cert.Domain.ToStrArray()
 		sort.Strings(certDomains)
+
 		i := sort.SearchStrings(certDomains, name)
 		if i < len(certDomains) && certDomains[i] == name {
 			return cert
 		}
 	}
+
 	return nil
 }
 

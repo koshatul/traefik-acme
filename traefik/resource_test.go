@@ -17,7 +17,10 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+// nolint: gochecknoglobals // acmeDatav1 is a test variable
 var acmeDatav1 []byte
+
+// nolint: gochecknoglobals // acmeDatav2 is a test variable
 var acmeDatav2 []byte
 
 var _ = BeforeSuite(func() {
@@ -51,8 +54,10 @@ var _ = BeforeSuite(func() {
 	certBuf := &bytes.Buffer{}
 	keyBuf := &bytes.Buffer{}
 
-	pem.Encode(certBuf, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
-	pem.Encode(keyBuf, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
+	err = pem.Encode(certBuf, &pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
+	Expect(err).NotTo(HaveOccurred())
+	err = pem.Encode(keyBuf, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
+	Expect(err).NotTo(HaveOccurred())
 
 	acmeTemp := traefik.LocalStore{
 		Certificates: []*traefik.Certificate{
