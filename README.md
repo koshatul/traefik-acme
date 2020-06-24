@@ -1,13 +1,14 @@
 # traefik-acme
+
 Extract certificates from acme.json created by traefik.
 
-#### Why ?
+## Why
 
 Using traefik to do the work of certbot is good, but sometimes you have other services that need access to the certificate, this CLI tool extracts them out so you can use them outside of traefik.
 
-#### Usage
+## Usage
 
-```
+```text
 Usage:
   traefik-acme <domain> [flags]
   traefik-acme [command]
@@ -30,24 +31,29 @@ Use "traefik-acme [command] --help" for more information about a command.
 ```
 
 Running from command line.
-```
+
+```shell
 traefik-acme -a /config/acme.json -c /etc/service/cert.pem -k /etc/service/key.pem servicename.domain.com
 ```
 
 If you want to use it in a script (for cron)
-```
+
+```shell
 traefik-acme --exit-code -a /config/acme.json -c /etc/service/cert.pem -k /etc/service/key.pem servicename.domain.com
 if [ $? == 99 ]; then
     systemctl reload service
 fi
 ```
 
-#### Development
+### Docker
 
-```
+
+## Development
+
+```shell
 make test
 ```
 
-```
+```shell
 ginkgo ./src/...
 ```

@@ -10,6 +10,7 @@ import (
 
 func TestSuite(t *testing.T) {
 	type tag struct{}
+
 	gomega.RegisterFailHandler(ginkgo.Fail)
 	ginkgo.RunSpecs(t, reflect.TypeOf(tag{}).PkgPath())
 }
