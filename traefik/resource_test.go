@@ -11,13 +11,14 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/koshatul/traefik-acme/src/traefik"
+	"github.com/koshatul/traefik-acme/traefik"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
 
-var acmeData []byte
+var acmeDatav1 []byte
+var acmeDatav2 []byte
 
 var _ = BeforeSuite(func() {
 	priv, err := rsa.GenerateKey(rand.Reader, 2048)
@@ -70,6 +71,17 @@ var _ = BeforeSuite(func() {
 	err = json.NewEncoder(buf).Encode(acmeTemp)
 	Expect(err).NotTo(HaveOccurred())
 
-	acmeData = buf.Bytes()
-	Expect(acmeData).NotTo(BeEmpty())
+	acmeDatav1 = buf.Bytes()
+	Expect(acmeDatav1).NotTo(BeEmpty())
+
+	buf.Reset()
+
+	acmeTempv2 := traefik.LocalStore{
+		Acme: &acmeTemp,
+	}
+	err = json.NewEncoder(buf).Encode(acmeTempv2)
+	Expect(err).NotTo(HaveOccurred())
+
+	acmeDatav2 = buf.Bytes()
+	Expect(acmeDatav2).NotTo(BeEmpty())
 })

@@ -9,8 +9,9 @@ import (
 
 // LocalStore represents the data managed by the Store
 type LocalStore struct {
-	Account        *Account
-	Certificates   []*Certificate
+	Acme           *LocalStore    `json:"acme"`
+	Account        *Account       `json:"Account"`
+	Certificates   []*Certificate `json:"Certificates"`
 	HTTPChallenges map[string]map[string][]byte
 	TLSChallenges  map[string]*Certificate
 }
@@ -36,6 +37,10 @@ func ReadBytes(data []byte) (*LocalStore, error) {
 	o := &LocalStore{}
 	if err := json.Unmarshal(data, o); err != nil {
 		return nil, err
+	}
+
+	if o.Acme != nil {
+		o = o.Acme
 	}
 
 	return o, nil
