@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -19,6 +20,11 @@ var rootCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 }
 
+const (
+	exitCodeError   = 1
+	exitCodeUpdated = 99
+)
+
 // nolint:gochecknoinits // init is used in main for cobra
 func init() {
 	cobra.OnInitialize(configInit)
@@ -34,6 +40,10 @@ func init() {
 	rootCmd.PersistentFlags().StringP("key", "k", "key.pem", "Location to write out key file")
 	_ = viper.BindPFlag("key", rootCmd.PersistentFlags().Lookup("key"))
 	_ = viper.BindEnv("key", "KEY_FILE")
+
+	rootCmd.PersistentFlags().StringP("certificate-resolver", "r", "acme", "Certificate Resovler name from traefik config")
+	_ = viper.BindPFlag("certificate-resolver", rootCmd.PersistentFlags().Lookup("certificate-resolver"))
+	_ = viper.BindEnv("certificate-resolver", "CERTIFICATE_RESOLVER")
 
 	rootCmd.PersistentFlags().Bool("force", false, "Force writing to file even if not updated")
 	_ = viper.BindPFlag("force", rootCmd.PersistentFlags().Lookup("force"))
@@ -52,70 +62,71 @@ func main() {
 	_ = rootCmd.Execute()
 }
 
-//nolint: gocritic // ifElseChain doesn't seem to be idiomatic here.
+//nolint: gocritic,nestif // ifElseChain doesn't seem to be idiomatic here.
 func writeFile(filename string, data []byte, perm os.FileMode) (bool, error) {
-	updated := false
-
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		// File does not exist, just write it.
 		logrus.WithField("filename", filename).Debugf("file not found, writing")
 
-		updated = true
-		err := ioutil.WriteFile(filename, data, perm)
+		if err := ioutil.WriteFile(filename, data, perm); err != nil {
+			return true, fmt.Errorf("unable to write file: %w", err)
+		}
 
-		return updated, err
+		return true, nil
 	} else if viper.GetBool("force") {
 		// Don't care if it exists, just write it.
 		logrus.WithField("filename", filename).Debugf("file found, but force enabled")
 
-		updated = true
 		err := ioutil.WriteFile(filename, data, perm)
 
-		return updated, err
+		return true, fmt.Errorf("unable to write file: %w", err)
 	} else {
 		// File exists
 		logrus.WithField("filename", filename).Debugf("file found")
 
 		ld, err := ioutil.ReadFile(filename)
 		if err != nil {
-			return false, err
+			return false, fmt.Errorf("unable to read file for compare: %w", err)
 		}
 
-		i := bytes.Compare(ld, data)
-		if i == 0 {
+		if i := bytes.Compare(ld, data); i == 0 {
 			logrus.WithField("filename", filename).Debugf("file unchanged")
-			return updated, nil
+
+			return false, nil
 		}
 
 		logrus.WithField("filename", filename).Debugf("file changed, writing")
-		updated = true
-		err = ioutil.WriteFile(filename, data, perm)
 
-		return updated, err
+		if err := ioutil.WriteFile(filename, data, perm); err != nil {
+			return true, fmt.Errorf("unable to write file: %w", err)
+		}
+
+		return true, nil
 	}
 }
 
+//nolint: nestif // mainCommand can stand a little complexity.
 func mainCommand(cmd *cobra.Command, args []string) {
 	domain := args[0]
 	updated := false
 
-	store, err := traefik.ReadFile(viper.GetString("acme"))
+	store, err := traefik.ReadFile(viper.GetString("acme"), viper.GetString("certificate-resolver"))
 	if err != nil {
 		logrus.Error(err)
-		os.Exit(1)
+		os.Exit(exitCodeError)
 	}
 
 	if cert := store.GetCertificateByName(domain); cert != nil {
 		certUpdated, err := writeFile(viper.GetString("cert"), cert.Certificate, 0644)
 		if err != nil {
 			logrus.Errorf("unable to write certificate: %s", err.Error())
-			os.Exit(1)
+			os.Exit(exitCodeError)
 		}
 
 		keyUpdated, err := writeFile(viper.GetString("key"), cert.Key, 0600)
 		if err != nil {
 			logrus.Errorf("unable to write key: %s", err.Error())
-			os.Exit(1)
+			os.Exit(exitCodeError)
 		}
 
 		if certUpdated || keyUpdated {
@@ -131,10 +142,10 @@ func mainCommand(cmd *cobra.Command, args []string) {
 		}
 	} else {
 		logrus.Printf("certificate not found for %s", domain)
-		os.Exit(1)
+		os.Exit(exitCodeError)
 	}
 
 	if updated && viper.GetBool("exit-code") {
-		os.Exit(99)
+		os.Exit(exitCodeUpdated)
 	}
 }
