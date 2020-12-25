@@ -110,7 +110,6 @@ nfpms:
   -
     id: traefik-acme
     package_name: traefik-acme
-    file_name_template: "traefik-acme_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     builds:
       - traefik-acme
     homepage: https://github.com/koshatul/traefik-acme
