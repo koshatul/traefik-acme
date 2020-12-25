@@ -67,9 +67,9 @@ jobs:
           mkdir -p ~/.docker
           echo $'{"experimental": "enabled","features":{"buildkit":true}}' | sudo tee ~/.docker/config.json
           sudo service docker restart
-          docker version -f '{{.Client.Experimental}}'
-          docker version -f '{{.Server.Experimental}}'
+          docker version
           docker buildx version
+          docker buildx ls
       - name: Docker registry login
         run: ./scripts/docker-login.sh
         env:
