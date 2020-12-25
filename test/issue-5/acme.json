@@ -1,0 +1,31 @@
+{
+    "acme-different": {
+        "Account": {
+            "Email": "koshatul@noreply.users.github.com",
+            "Registration": {
+                "body": {
+                    "status": "valid",
+                    "contact": [
+                        "mailto:koshatul@noreply.users.github.com"
+                    ]
+                },
+                "uri": "https://acme-v02.api.letsencrypt.org/acme/acct/123456789"
+            },
+            "PrivateKey": "c2VjcmV0LXByaXZhdGUta2V5LWZvci0xMjM0NTY3ODkK",
+            "KeyType": "4096"
+        },
+        "Certificates": [
+            {
+                "domain": {
+                    "main": "example.com",
+                    "sans": [
+                        "*.example.com"
+                    ]
+                },
+                "certificate": "Y2VydGlmaWNhdGUtZm9yLWV4YW1wbGUuY29tCg==",
+                "key": "a2V5LWZvci1leGFtcGxlLmNvbQo=",
+                "Store": "default"
+            }
+        ]
+    }
+}

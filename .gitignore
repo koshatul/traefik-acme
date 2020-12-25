@@ -1,3 +1,4 @@
 /.makefiles/
 /artifacts/
 /vendor/
+/dist/
