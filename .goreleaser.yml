@@ -29,6 +29,27 @@ changelog:
       - '^docs:'
       - '^test:'
 
+dockers:
+  -
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    binaries:
+    - traefik-acme
+    builds:
+    - traefik-acme
+    skip_push: true
+    build_flag_templates:
+    - "--pull"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.title={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    image_templates:
+    - "koshatul/traefik-acme:v{{ .Major }}"
+    - "koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}"
+    - "koshatul/traefik-acme:latest"
+
 nfpms:
   -
     id: traefik-acme
