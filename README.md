@@ -1,5 +1,7 @@
 # traefik-acme
 
+![ci](https://github.com/koshatul/traefik-acme/workflows/ci/badge.svg)
+
 Extract certificates from acme.json created by traefik.
 
 ## Why
