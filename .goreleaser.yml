@@ -86,18 +86,6 @@ dockers:
     - "koshatul/traefik-acme:latest-armv7"
     - "koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}-armv7"
 
-# docker_manifests:
-#   - name_template: koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}
-#     image_templates:
-#     - koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}-amd64
-#     - koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}-armv7
-#     - koshatul/traefik-acme:v{{ .Major }}.{{ .Minor }}-arm64v8
-#   - name_template: koshatul/traefik-acme:latest
-#     image_templates:
-#     - koshatul/traefik-acme:latest-amd64
-#     - koshatul/traefik-acme:latest-armv7
-#     - koshatul/traefik-acme:latest-arm64v8
-
 nfpms:
   -
     id: traefik-acme
