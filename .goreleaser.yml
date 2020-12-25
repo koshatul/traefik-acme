@@ -1,0 +1,46 @@
+env:
+  - CGO_ENABLED=0
+
+before:
+  hooks:
+    - make test
+    - go mod tidy
+    - go mod download
+
+builds:
+  - id: traefik-acme
+    main: ./cmd/traefik-acme
+    binary: traefik-acme
+    targets:
+      - linux_amd64
+      - darwin_amd64
+
+checksum:
+  algorithm: sha256
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+nfpms:
+  -
+    id: traefik-acme
+    package_name: traefik-acme
+    file_name_template: "traefik-acme_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    builds:
+      - traefik-acme
+    homepage: https://github.com/koshatul/traefik-acme
+    maintainer: koshatul <koshatul@users.noreply.github.com>
+    description: Traefik ACME extraction tool.
+    formats:
+      - apk
+      - deb
+    bindir: /usr/bin
+

@@ -9,7 +9,7 @@ import (
 	"github.com/go-acme/lego/registration"
 )
 
-// Account is used to store lets encrypt registration info
+// Account is used to store lets encrypt registration info.
 type Account struct {
 	Email        string
 	Registration *registration.Resource
@@ -17,17 +17,17 @@ type Account struct {
 	KeyType      certcrypto.KeyType
 }
 
-// GetEmail returns email
+// GetEmail returns email.
 func (a *Account) GetEmail() string {
 	return a.Email
 }
 
-// GetRegistration returns lets encrypt registration resource
+// GetRegistration returns lets encrypt registration resource.
 func (a *Account) GetRegistration() *registration.Resource {
 	return a.Registration
 }
 
-// GetPrivateKey returns private key
+// GetPrivateKey returns private key.
 func (a *Account) GetPrivateKey() crypto.PrivateKey {
 	privateKey, err := x509.ParsePKCS1PrivateKey(a.PrivateKey)
 	if err != nil {
@@ -37,7 +37,7 @@ func (a *Account) GetPrivateKey() crypto.PrivateKey {
 	return privateKey
 }
 
-// GetKeyType used to determine which algo to used
+// GetKeyType used to determine which algo to used.
 func GetKeyType(ctx context.Context, value string) certcrypto.KeyType {
 	switch value {
 	case "EC256":

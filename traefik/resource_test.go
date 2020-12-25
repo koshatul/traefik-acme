@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/koshatul/traefik-acme/traefik"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -22,6 +21,15 @@ var acmeDatav1 []byte
 
 // nolint: gochecknoglobals // acmeDatav2 is a test variable
 var acmeDatav2 []byte
+
+// nolint: gochecknoglobals // acmeDatav3 is a test variable
+var acmeDatav3 []byte = []byte(`{"acme":{"Account":{"Email":"koshatul@noreply.users.github.com","Registration":{"body":{"status":"valid","contact":["mailto:koshatul@noreply.users.github.com"]},"uri":"https://acme-v02.api.letsencrypt.org/acme/acct/123456789"},"PrivateKey":"c2VjcmV0LXByaXZhdGUta2V5LWZvci0xMjM0NTY3ODkK","KeyType":"4096"},"Certificates":[{"domain":{"main":"example.com","sans":["*.example.com"]},"certificate":"Y2VydGlmaWNhdGUtZm9yLWV4YW1wbGUuY29tCg==","key":"a2V5LWZvci1leGFtcGxlLmNvbQo=","Store":"default"}]}}`)
+
+// nolint: gochecknoglobals // acmeDatav4 is a test variable
+var acmeDatav4 []byte = []byte(`{"acme":{"Account":{"Email":"koshatul@noreply.users.github.com","Registration":{"body":{"status":"valid","contact":["mailto:koshatul@noreply.users.github.com"]},"uri":"https://acme-v02.api.letsencrypt.org/acme/acct/123456789"},"PrivateKey":"c2VjcmV0LXByaXZhdGUta2V5LWZvci0xMjM0NTY3ODkK","KeyType":"4096"},"Certificates":[{"domain":{"main":"*.example.com"},"certificate":"Y2VydGlmaWNhdGUtZm9yLWV4YW1wbGUuY29tCg==","key":"a2V5LWZvci1leGFtcGxlLmNvbQo=","Store":"default"}]}}`)
+
+// nolint: gochecknoglobals // acmeDatav5 is a test variable
+var acmeDatav5 []byte = []byte(`{"acme-different":{"Account":{"Email":"koshatul@noreply.users.github.com","Registration":{"body":{"status":"valid","contact":["mailto:koshatul@noreply.users.github.com"]},"uri":"https://acme-v02.api.letsencrypt.org/acme/acct/123456789"},"PrivateKey":"c2VjcmV0LXByaXZhdGUta2V5LWZvci0xMjM0NTY3ODkK","KeyType":"4096"},"Certificates":[{"domain":{"main":"example.com","sans":["*.example.com"]},"certificate":"Y2VydGlmaWNhdGUtZm9yLWV4YW1wbGUuY29tCg==","key":"a2V5LWZvci1leGFtcGxlLmNvbQo=","Store":"default"}]}}`)
 
 var _ = BeforeSuite(func() {
 	priv, err := rsa.GenerateKey(rand.Reader, 2048)
@@ -59,7 +67,7 @@ var _ = BeforeSuite(func() {
 	err = pem.Encode(keyBuf, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)})
 	Expect(err).NotTo(HaveOccurred())
 
-	acmeTemp := traefik.LocalStore{
+	acmeTemp := traefik.LocalNamedStore{
 		Certificates: []*traefik.Certificate{
 			{
 				Key:         keyBuf.Bytes(),
@@ -82,7 +90,7 @@ var _ = BeforeSuite(func() {
 	buf.Reset()
 
 	acmeTempv2 := traefik.LocalStore{
-		Acme: &acmeTemp,
+		"acme": &acmeTemp,
 	}
 	err = json.NewEncoder(buf).Encode(acmeTempv2)
 	Expect(err).NotTo(HaveOccurred())
