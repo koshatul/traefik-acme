@@ -66,6 +66,15 @@ jobs:
         env:
           INPUT_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           INPUT_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Enable experimental features for the Docker daemon and CLI
+        run: |
+          echo $'{\n  "experimental": true\n}' | sudo tee /etc/docker/daemon.json
+          mkdir -p ~/.docker
+          echo $'{\n  "experimental": "enabled"\n}' | sudo tee ~/.docker/config.json
+          sudo service docker restart
+          docker version -f '{{.Client.Experimental}}'
+          docker version -f '{{.Server.Experimental}}'
+          docker buildx version
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
