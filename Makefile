@@ -1,6 +1,6 @@
 DOCKER_REPO := koshatul/traefik-acme
 
-GO_MATRIX_OS ?= darwin linux
+GO_MATRIX_OS ?= linux darwin
 GO_MATRIX_ARCH ?= amd64
 
 APP_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")

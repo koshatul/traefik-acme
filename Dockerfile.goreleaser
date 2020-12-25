@@ -1,3 +1,4 @@
-FROM scratch
+ARG PLATFORM=
+FROM --platform=${PLATFORM} alpine:3.12
 COPY traefik-acme /
 ENTRYPOINT [ "/traefik-acme" ]
