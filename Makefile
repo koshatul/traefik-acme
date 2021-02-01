@@ -71,6 +71,26 @@ artifacts/test/issue-5/test2.out: test/issue-5/acme.json $(TEST_RUNNER) $(GO_SOU
 	grep "certificate-for-example.com" "$(@D)/cert.pem"
 	grep "key-for-example.com" "$(@D)/key.pem"
 
+.DELETE_ON_ERROR: artifacts/test/issue-14/v1/test1.out
+REGRESSION_TESTS += artifacts/test/issue-14/v1/test1.out
+artifacts/test/issue-14/v1/test1.out: test/issue-14/v1/acme.json $(TEST_RUNNER) $(GO_SOURCE_FILES)
+	-@mkdir -p "$(@D)"
+	-@$(RM) "$(@D)/cert.pem" "$(@D)/key.pem"
+	$(TEST_RUNNER) --acme="$(<)" --cert "$(@D)/cert.pem" --key "$(@D)/key.pem" "test.example.com" | tee "$(@)"
+	grep "Certificate" "$(@D)/cert.pem"
+	grep "Certificate Key" "$(@D)/key.pem"
+
+.DELETE_ON_ERROR: artifacts/test/issue-14/v2/test1.out
+REGRESSION_TESTS += artifacts/test/issue-14/v2/test1.out
+artifacts/test/issue-14/v2/test1.out: test/issue-14/v2/new-acme.json $(TEST_RUNNER) $(GO_SOURCE_FILES)
+	-@mkdir -p "$(@D)"
+	-@$(RM) "$(@D)/cert.pem" "$(@D)/key.pem"
+	$(TEST_RUNNER) --acme="$(<)" --certificate-resolver "myresolver" --cert "$(@D)/cert.pem" --key "$(@D)/key.pem" "test.example.com" | tee "$(@)"
+	grep "Certificate" "$(@D)/cert.pem"
+	grep "Certificate Key" "$(@D)/key.pem"
+
+
+
 .PHONY: regression-tests
 regression-tests: $(REGRESSION_TESTS)
 
