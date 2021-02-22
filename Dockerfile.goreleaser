@@ -1,4 +1,4 @@
 ARG PLATFORM=
-FROM --platform=${PLATFORM} alpine:3.13.1
+FROM --platform=${PLATFORM} alpine:3.13.2
 COPY traefik-acme /
 ENTRYPOINT [ "/traefik-acme" ]
