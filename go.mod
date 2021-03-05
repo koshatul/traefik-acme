@@ -7,7 +7,7 @@ require (
 	github.com/go-acme/lego v2.7.2+incompatible
 	github.com/hashicorp/hcl v1.0.1-0.20180906183839-65a6292f0157 // indirect
 	github.com/mitchellh/mapstructure v1.3.2 // indirect
-	github.com/onsi/ginkgo v1.14.2
+	github.com/onsi/ginkgo v1.15.0
 	github.com/onsi/gomega v1.10.4
 	github.com/pelletier/go-toml v1.8.0 // indirect
 	github.com/sirupsen/logrus v1.8.0
