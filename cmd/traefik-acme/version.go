@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-//nolint: gochecknoglobals // these have to be variables for the linker to change the values
+//nolint:gochecknoglobals // these have to be variables for the linker to change the values
 var (
 	version = "dev"
 	date    = "notset"

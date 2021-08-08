@@ -12,6 +12,7 @@ import (
 type LocalStore map[string]*LocalNamedStore
 
 // LocalNamedStore represents the data managed by the Store.
+//nolint:tagliatelle // importing definition from traefik.
 type LocalNamedStore struct {
 	// Acme           *LocalStore    `json:"acme"`
 	Account        *Account       `json:"Account"`

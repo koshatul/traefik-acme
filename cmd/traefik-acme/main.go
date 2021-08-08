@@ -7,12 +7,13 @@ import (
 	"os"
 
 	"github.com/koshatul/traefik-acme/traefik"
+	"github.com/na4ma4/permbits"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-// nolint: gochecknoglobals // cobra uses globals in main
+//nolint:gochecknoglobals // cobra uses globals in main
 var rootCmd = &cobra.Command{
 	Use:   "traefik-acme <domain>",
 	Short: "Command to extract SSL certificates from traefik acme.json",
@@ -25,7 +26,7 @@ const (
 	exitCodeUpdated = 99
 )
 
-// nolint:gochecknoinits // init is used in main for cobra
+//nolint:gochecknoinits // init is used in main for cobra
 func init() {
 	cobra.OnInitialize(configInit)
 
@@ -62,7 +63,7 @@ func main() {
 	_ = rootCmd.Execute()
 }
 
-//nolint: gocritic,nestif // ifElseChain doesn't seem to be idiomatic here.
+//nolint:gocritic,nestif // ifElseChain doesn't seem to be idiomatic here.
 func writeFile(filename string, data []byte, perm os.FileMode) (bool, error) {
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		// File does not exist, just write it.
@@ -105,7 +106,7 @@ func writeFile(filename string, data []byte, perm os.FileMode) (bool, error) {
 	}
 }
 
-//nolint: nestif // mainCommand can stand a little complexity.
+//nolint:nestif // mainCommand can stand a little complexity.
 func mainCommand(cmd *cobra.Command, args []string) {
 	domain := args[0]
 	updated := false
@@ -117,13 +118,21 @@ func mainCommand(cmd *cobra.Command, args []string) {
 	}
 
 	if cert := store.GetCertificateByName(domain); cert != nil {
-		certUpdated, err := writeFile(viper.GetString("cert"), cert.Certificate, 0644)
+		certUpdated, err := writeFile(
+			viper.GetString("cert"),
+			cert.Certificate,
+			permbits.UserRead+permbits.UserWrite+permbits.GroupRead+permbits.OtherRead,
+		)
 		if err != nil {
 			logrus.Errorf("unable to write certificate: %s", err.Error())
 			os.Exit(exitCodeError)
 		}
 
-		keyUpdated, err := writeFile(viper.GetString("key"), cert.Key, 0600)
+		keyUpdated, err := writeFile(
+			viper.GetString("key"),
+			cert.Key,
+			permbits.UserRead+permbits.UserWrite,
+		)
 		if err != nil {
 			logrus.Errorf("unable to write key: %s", err.Error())
 			os.Exit(exitCodeError)
