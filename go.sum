@@ -242,8 +242,8 @@ github.com/mitchellh/mapstructure v1.4.2/go.mod h1:bFUtVrKA4DC2yAKiSyO/QUcy7e+RR
 github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421/go.mod h1:6dJC0mAP4ikYIbvyc7fijjWJddQyLn8Ig3JB5CqoB9Q=
 github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
-github.com/na4ma4/permbits v0.1.0 h1:DjpgC1JyYFqxOnkCrCWcBBAA1jt6IWl/Xk98wRDyFp8=
-github.com/na4ma4/permbits v0.1.0/go.mod h1:vS1uN9OXc9jrt2uHmMD3bd09VoN7z/5AulfYIE22PT0=
+github.com/na4ma4/permbits v0.3.0 h1:4f08u11uvkzbdq/JEEzYg1+NEn2a1BMmfHHxeKwGsHY=
+github.com/na4ma4/permbits v0.3.0/go.mod h1:vS1uN9OXc9jrt2uHmMD3bd09VoN7z/5AulfYIE22PT0=
 github.com/nxadm/tail v1.4.4/go.mod h1:kenIhsEOeOJmVchQTgglprH7qJGnHDVpk1VPCcaMI8A=
 github.com/nxadm/tail v1.4.8 h1:nPr65rt6Y5JFSKQO7qToXr7pePgD6Gwiw05lkbyAQTE=
 github.com/nxadm/tail v1.4.8/go.mod h1:+ncqLTQzXmGhMZNUePPaPqPvBxHAIsmXswZKocGu+AU=
