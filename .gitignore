@@ -2,3 +2,4 @@
 /artifacts/
 /vendor/
 /dist/
+test/issue-52/*.pem
