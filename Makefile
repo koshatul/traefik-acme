@@ -1,7 +1,7 @@
 DOCKER_REPO := koshatul/traefik-acme
 
-GO_MATRIX_OS ?= linux darwin
-GO_MATRIX_ARCH ?= amd64
+GO_MATRIX == darwin/amd64 darwin/arm64
+GO_MATRIX += linux/amd64
 
 APP_DATE ?= $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 GIT_HASH ?= $(shell git show -s --format=%h)
@@ -94,7 +94,13 @@ artifacts/test/issue-14/v2/test1.out: test/issue-14/v2/new-acme.json $(TEST_RUNN
 	grep "Certificate" "$(@D)/cert.pem"
 	grep "Certificate Key" "$(@D)/key.pem"
 
-
+.DELETE_ON_ERROR: artifacts/test/issue-52/cert.pem artifacts/test/issue-52/key.pem
+REGRESSION_TESTS += artifacts/test/issue-52/cert.pem artifacts/test/issue-52/key.pem
+artifacts/test/issue-52/cert.pem artifacts/test/issue-52/key.pem: test/issue-52/acme.json
+	-@mkdir -p "$(@D)"
+	-@$(RM) "$(@D)/cert.pem" "$(@D)/key.pem"
+	docker run --rm -v "$(shell pwd)/test/issue-52:/input" -v "$(shell pwd)/$(@D):/output" --workdir /output koshatul/traefik-acme:latest --acme "/input/acme.json" test.example.com | tee "$(@).log"
+	grep "^Certificate" "$(@)"
 
 .PHONY: regression-tests
 regression-tests: $(REGRESSION_TESTS)
