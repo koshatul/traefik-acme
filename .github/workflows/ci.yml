@@ -23,7 +23,7 @@ jobs:
       - name: Set up go env
         run: export PATH=${PATH}:`go env GOPATH`/bin
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2.5.2
+        uses: golangci/golangci-lint-action@v3.1.0
         with:
           version: v1.43
       - name: unit-test
