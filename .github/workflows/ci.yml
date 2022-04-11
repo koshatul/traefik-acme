@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: 1.17
         id: go
@@ -48,7 +48,7 @@ jobs:
           INPUT_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           INPUT_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       - name: Set up Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           go-version: 1.17
         id: go
