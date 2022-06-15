@@ -1,8 +1,10 @@
-# traefik-acme
+# ~traefik-acme~
+
+I'm not maintaining this anymore, so I've given it over to [na4ma4/traefik-acme](https://github.com/na4ma4/traefik-acme).
 
 [![ci](https://github.com/koshatul/traefik-acme/actions/workflows/ci.yml/badge.svg)](https://github.com/koshatul/traefik-acme/actions/workflows/ci.yml)
 
-Extract certificates from acme.json created by traefik.
+~Extract certificates from acme.json created by traefik.~
 
 ## Why
 
